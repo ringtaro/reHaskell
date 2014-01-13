@@ -1,5 +1,5 @@
 import Control.Concurrent (threadDelay)
-import Control.Monad (forM_)
+import Data.List (intersperse)
 
 wait :: IO ()
 wait = threadDelay 100000
@@ -12,8 +12,5 @@ faces = ["( ´･_･)", "(  ´･_)", "(   ´･)", "(    ´)", "(     )", "(` 
 
 main :: IO ()
 main = do
-  forM_ (concat $ replicate 3 faces) $ \f -> do
-    putStr f
-    wait
-    cr
+  sequence_ $ intersperse (wait >> cr) $ concat $ replicate 3 $ map putStr faces
   putStrLn ""
